@@ -61,3 +61,17 @@ Route::post('/run_seeds', function(Request $request) {
         return response()->json("Falha nas credenciais " . $request->user . $request->password, 401);
     }
 });
+
+Route::post('/run_composer', function(Request $request) {
+
+    if($request->user === "amacedo" && $request->password === "4nd3rs0n0606_execComposer"){
+        try {
+            shell_exec('composer update');
+            return response()->json("Composer em execução", 200);
+        } catch (Exception $e){
+            return response()->json("Falha em chamar o composer. <br> Mensagem de Erro: " . $e->getMessage(), 200);
+        }
+    }else{
+        return response()->json("Falha nas credenciais " . $request->user . $request->password, 401);
+    }
+});
